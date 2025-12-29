@@ -6,6 +6,7 @@ Reads social_media_vs_productivity_fixed.csv and creates social_media_vs_product
 
 import csv
 import random
+from collections import defaultdict, Counter
 
 # Set random seed for reproducibility
 random.seed(42)
@@ -78,7 +79,8 @@ def assign_platform_by_age(age):
         age: Age as a float or string or None
         
     Returns:
-        Platform name or empty string if age is missing
+        Platform name or empty string if age is missing or invalid.
+        Empty string is returned to preserve CSV format consistency.
     """
     if age is None or age == '':
         return ''
@@ -145,8 +147,6 @@ def verify_distribution(csv_file):
     Args:
         csv_file: Path to CSV file to analyze
     """
-    from collections import defaultdict, Counter
-    
     age_group_platforms = defaultdict(list)
     
     with open(csv_file, 'r', newline='', encoding='utf-8') as f:
