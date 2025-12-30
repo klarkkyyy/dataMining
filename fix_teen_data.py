@@ -63,7 +63,7 @@ def get_teen_age_group(age):
         age: Age as a float
         
     Returns:
-        Age group key string or None
+        Age group key string ('early_teen', 'high_school', 'college_freshman') or None for non-teen ages
     """
     if pd.isna(age):
         return None
@@ -88,7 +88,7 @@ def assign_platform_by_teen_age(age):
         age: Age as a float
         
     Returns:
-        Platform name
+        Platform name (TikTok, Instagram, Snapchat, Twitter, or Facebook) or None for non-teen ages
     """
     age_group = get_teen_age_group(age)
     
@@ -112,7 +112,7 @@ def assign_social_media_time(age, platform):
         platform: Social media platform name
         
     Returns:
-        Daily social media time in hours
+        Daily social media time in hours (float) or None for non-teen ages or invalid platforms
     """
     age_group = get_teen_age_group(age)
     
@@ -144,10 +144,10 @@ def expand_teen_ages(df):
     Expand teen age range from 18-19 to 13-19.
     
     Args:
-        df: DataFrame with teen data
+        df: DataFrame with full dataset (modifies in place)
         
     Returns:
-        Modified DataFrame with expanded age range
+        Modified DataFrame with expanded age range for teen rows
     """
     # Find all rows with age 18.0 or 19.0
     teen_mask = df['age'].isin([18.0, 19.0])
@@ -175,10 +175,10 @@ def update_teen_platforms_and_time(df):
     Update platform preferences and social media time for teens (ages 13-19).
     
     Args:
-        df: DataFrame with teen data
+        df: DataFrame with full dataset (modifies in place)
         
     Returns:
-        Modified DataFrame with updated platforms and times
+        Modified DataFrame with updated platforms and times for teen rows
     """
     # Find all teen rows (ages 13-19)
     teen_mask = df['age'].isin([13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0])
